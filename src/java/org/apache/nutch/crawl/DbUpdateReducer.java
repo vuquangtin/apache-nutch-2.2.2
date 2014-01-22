@@ -116,7 +116,9 @@ extends GoraReducer<UrlWithScore, NutchWritable, String, WebPage> {
           modified = FetchSchedule.STATUS_NOTMODIFIED;
         }
         ByteBuffer prevSig = page.getPrevSignature();
+        
         ByteBuffer signature = page.getSignature();
+        
         if (prevSig != null && signature != null) {
           if (SignatureComparator.compare(prevSig, signature) != 0) {
             modified = FetchSchedule.STATUS_MODIFIED;

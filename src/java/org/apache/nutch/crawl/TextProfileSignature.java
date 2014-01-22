@@ -69,7 +69,7 @@ public class TextProfileSignature extends Signature {
     float QUANT_RATE = getConf().getFloat("db.signature.text_profile.quant_rate", 0.01f);
     HashMap<String, Token> tokens = new HashMap<String, Token>();
     String text = null;
-    if (page.getText() != null) text = page.getText().toString();
+    if (page.get(WebPage.Field.TEXT.getIndex()) != null) text = ((String)page.get(WebPage.Field.TEXT.getIndex())).toString();
     if (text == null || text.length() == 0) return fallback.calculate(page);
     StringBuffer curToken = new StringBuffer();
     int maxFreq = 0;

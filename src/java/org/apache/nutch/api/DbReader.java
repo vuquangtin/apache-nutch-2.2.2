@@ -200,16 +200,18 @@ public class DbReader {
           }
           res.put(f, simpleMeta);
         } else if ("protocolStatus".equals(f)) {
-          ProtocolStatus ps = page.getProtocolStatus();
+            //ProtocolStatus ps = page.getProtocolStatus();
+            ProtocolStatus ps = page.getProtocolStatus();
           res.put(f, ProtocolStatusUtils.toString(ps));
         } else if ("parseStatus".equals(f)) {
-          ParseStatus ps = page.getParseStatus();
+            ParseStatus ps = page.getParseStatus();
           res.put(f, ParseStatusUtils.toString(ps));
         } else if ("signature".equals(f)) {
-          ByteBuffer bb = page.getSignature();
+            ByteBuffer bb = page.getSignature();
           res.put(f, StringUtil.toHexString(bb));
         } else if ("content".equals(f)) {
-          ByteBuffer bb = page.getContent();
+            ByteBuffer bb = page.getContent();
+            
           res.put(f, Bytes.toStringBinary(bb));
         } else if ("markers".equals(f)) {
           res.put(f, convertMap(page.getMarkers()));

@@ -29,7 +29,7 @@ import org.apache.nutch.util.Bytes;
 
 @SuppressWarnings("all")
 public class Host extends PersistentBase {
-  public static final org.apache.avro.Schema _SCHEMA = org.apache.avro.Schema.parse("{\"type\":\"record\",\"name\":\"Host\",\"namespace\":\"org.apache.nutch.storage\",\"fields\":[{\"name\":\"metadata\",\"type\":{\"type\":\"map\",\"values\":\"bytes\"}},{\"name\":\"outlinks\",\"type\":{\"type\":\"map\",\"values\":\"string\"}},{\"name\":\"inlinks\",\"type\":{\"type\":\"map\",\"values\":\"string\"}}]}");
+    public static final org.apache.avro.Schema _SCHEMA = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Host\",\"namespace\":\"org.apache.nutch.storage\",\"fields\":[{\"name\":\"metadata\",\"type\":{\"type\":\"map\",\"values\":\"bytes\"}},{\"name\":\"outlinks\",\"type\":{\"type\":\"map\",\"values\":\"string\"}},{\"name\":\"inlinks\",\"type\":{\"type\":\"map\",\"values\":\"string\"}}]}");
   public java.util.Map<org.apache.avro.util.Utf8,java.nio.ByteBuffer> metadata;
   public java.util.Map<org.apache.avro.util.Utf8,org.apache.avro.util.Utf8> outlinks;
   public java.util.Map<org.apache.avro.util.Utf8,org.apache.avro.util.Utf8> inlinks;

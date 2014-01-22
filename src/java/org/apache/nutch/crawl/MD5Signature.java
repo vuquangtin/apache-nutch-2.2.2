@@ -42,12 +42,13 @@ public class MD5Signature extends Signature {
 
   @Override
   public byte[] calculate(WebPage page) {
-    ByteBuffer buf = page.getContent();
+      ByteBuffer buf = page.getContent();
     byte[] data;
     int of;
     int cb;
     if (buf == null) {
-      Utf8 baseUrl = page.getBaseUrl();
+        Utf8 baseUrl = page.getBaseUrl();
+        
       if (baseUrl == null) {
         data = null;
         of = 0;
@@ -56,7 +57,7 @@ public class MD5Signature extends Signature {
       else {
         data = baseUrl.getBytes();
         of = 0;
-        cb = baseUrl.getLength();
+        cb = baseUrl.getByteLength();
       }
     } else {
       data = buf.array();

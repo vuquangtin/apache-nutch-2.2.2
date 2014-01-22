@@ -516,33 +516,63 @@
    It could not be loaded from ${ivy.repo.url}
   </fail>
  </target>
-	
-  <target name="compile-avro-schema" depends="resolve-default" description="--> compile the avro schema(s) in src/gora/*.avsc">
-    <typedef name="schema" 
-  	         classname="org.apache.avro.specific.SchemaTask"
-  	         classpathref="classpath" />
-    
-  	<mkdir dir="${build.gora}" />
-  	<schema destdir="${build.gora}">
-  	  <fileset dir="./src/gora">
-  	    <include name="**/*.avsc"/>
-  	  </fileset>
-  	</schema>
-  	
-	</target>
 
-   <!-- ====================================================== -->
-  <!-- Generate the Java files from the GORA schemas          -->
-  <!-- Will call this automatically later                     -->
+  <target name="compile-avro-schema" depends="resolve-default" 
+		   description="--> compile the avro schema(s) in src/gora/*.avsc">
+	  <typedef name="schema" classname="org.apache.gora.compiler.GoraCompiler" classpathref="classpath" />
+	   <mkdir dir="${build.gora}" />
+	  <schema destdir="${build.gora}">
+		    <fileset dir="./src/gora">
+			     <include name="**/*.avsc"/>
+			    </fileset>
+		   </schema>
+  </target>
+
+
+
   <!-- ====================================================== -->
-  <target name="generate-gora-src" depends="init" description="--> compile the avro schema(s) in src/gora/*.avsc">
-    <java classname="org.apache.gora.compiler.GoraCompiler">
-     <classpath refid="classpath"/>
-     <arg value="src/gora/"/>
-     <arg value="${src.dir}"/>
-    </java>
- </target>
+  <!-- Generate the Java files from the GORA schemas          -->
+   <!-- Will call this automatically later.                    -->
+   <!-- map for the gora .avsc files contained in ./src/gora/  -->
+   <!-- so they can be passed as a list to the GoraCompiler    -->
+   <!-- via the generate-gora-src target                       -->
+   <!-- ====================================================== -->
+   <!--filelist id="gora.avsc.files" dir="${gora.avsc.dir}" files="webpage.avsc, host.avsc" />
 
+     <pathconvert property="gora.avsc.files" refid="gora.avsc.files">
+	       <map from="${gora.avsc.dir}" to=""/>
+	      </pathconvert-->
+    <!--fileset dir="${gora.avsc.dir}" id="gora.avsc.files">
+         <include name="**/*.avsc"/>
+        </fileset>
+       <pathconvert property="goraavscfiles" refid="gora.avsc.files"/>   
+	   <target name="generate-gora-src"
+  description=" generate the Java files from the Gora schema(s) in src/gora/*.avsc">
+  <java classname="org.apache.gora.compiler.GoraCompiler" fork="true">
+   <classpath refid="classpath"/>
+   <arg value="${goraavscfiles}"/>
+   <arg value="${src.dir}"/>
+  </java>
+ </target-->
+ <fileset dir="${gora.avsc.dir}" id="gora.avsc.files">
+  <include name="*.avsc"/>
+ </fileset>
+ <pathconvert property="goraavscfiles" refid="gora.avsc.files">
+  <map from="${goraavscdir}" to=""/>
+ </pathconvert>
+ 
+ <target name="generate-gora-src" 
+  description="> generate the Java files from the Gora schema(s) in src/gora/*.avsc">
+  <java classname="org.apache.gora.compiler.GoraCompiler" fork="true">
+   <classpath refid="classpath"/>
+   <arg value="./src/gora/webpage.avsc"/>
+   <arg value="${src.dir}"/>
+  </java>
+ </target>
+ 
+ <!--depends="init, resolve-default"-->
+        
+ 
  <!-- ================================================================== -->
  <!-- Documentation -->
  <!-- ================================================================== -->
